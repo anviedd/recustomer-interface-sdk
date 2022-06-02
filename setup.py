@@ -22,6 +22,7 @@ setuptools.setup(
     install_requires=[
         'requests>=2.27.1',
         'pydantic>=1.9.1',
+        'six>=1.16.0',
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest>=4.4.1'],

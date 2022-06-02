@@ -1,7 +1,9 @@
 import os
+from contextlib import contextmanager
+
 from ec_cart import constants
 from ec_cart.api_version import ApiVersion
-import ec_cart
+import six
 from urllib.parse import urlparse
 
 
@@ -33,8 +35,24 @@ class Service(object):
         self.ec_url = ec_url
         self.access_token = access_token
         self.version = ApiVersion.coerce_to_version(version)
+        return
 
-        ec_cart.ReInterfaceResource.activate_service(self)
+    @staticmethod
+    @contextmanager
+    def temp(system_code, ec_url, access_token):
+        import ec_cart
+        original_system_code = ec_cart.ReInterfaceResource.system_code
+        original_ec_url = ec_cart.ReInterfaceResource.ec_url
+        original_access_token = ec_cart.ReInterfaceResource.access_token
+        original_service = None
+        if original_system_code is not None:
+            original_service = ec_cart.Service(original_system_code, original_ec_url, original_access_token)
+
+        service = Service(system_code, ec_url, access_token)
+        ec_cart.ReInterfaceResource.activate_service(service)
+        yield
+        if original_system_code is not None and original_service:
+            ec_cart.ReInterfaceResource.activate_service(original_service)
 
     @property
     def endpoint(self):

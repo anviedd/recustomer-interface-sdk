@@ -75,10 +75,16 @@ class ActiveResource(object):
 class ReInterfaceResource(ActiveResource):
     api_key = None
     service_code = None
+    system_code = None
+    ec_url = None
+    access_token = None
     _thread_local = threading.local()
-    headers = {
+
+    old_headers = {
         "User-Agent": "PostmanRuntime/7.29.0"
     }
+    headers = {}
+
     _url = None
 
     @classmethod
@@ -89,9 +95,13 @@ class ReInterfaceResource(ActiveResource):
         cls.api_key = service.api_key
         cls.service_code = service.service_code
         cls.service_endpoint = service.endpoint + service.version.path
+        cls.system_code = service.system_code
+        cls.ec_url = service.ec_url
+        cls.access_token = service.access_token
         cls._thread_local._system_code = service.system_code
         cls._thread_local._ec_url = service.ec_url
         cls._thread_local._access_token = service.access_token
+        cls.headers = cls.old_headers
         cls._thread_local._headers = cls.headers
         cls._thread_local._headers.update({
             'x-api-key': cls.api_key,
@@ -105,8 +115,12 @@ class ReInterfaceResource(ActiveResource):
             })
 
     @classmethod
-    def clear_session(cls):
+    def clear_service(cls):
+        cls.system_code = None
+        cls._ec_url = None
+        cls.access_token = None
+        cls.headers = cls.old_headers
         cls._thread_local._system_code = None
         cls._thread_local._ec_url = None
-        cls._thread_local._headers = cls.headers
+        cls._thread_local._headers = {}
         cls._thread_local._access_token = None
