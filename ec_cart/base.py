@@ -68,26 +68,25 @@ class ActiveResource(object):
             )
             response_content = json.loads(response.content)
             if response.ok:
-                data = cls.__build_response(cls, response_content.get('data'))
-                return data
+                return cls.__build_response(cls, response_content)
             else:
-                return response_content.get('message')
+                return response_content
         except Exception as e:
             raise e
 
     @staticmethod
-    def __build_response(cls, data) -> Any:
+    def __build_response(cls, content) -> Any:
+        data = content.get('data')
         if cls.Meta.model is None:
             return data
         try:
             if isinstance(data, (dict,)):
-                return cls.Meta.model.parse_obj(data)
+                content['data'] = cls.Meta.model.parse_obj(data)
             elif isinstance(data, (list, tuple)):
-                return [cls.Meta.model.parse_obj(d) for d in data]
-            else:
-                return data
+                content['data'] = [cls.Meta.model.parse_obj(d) for d in data]
+            return content
         except Exception:
-            return data
+            return content
 
 
 class ReInterfaceResource(ActiveResource):
