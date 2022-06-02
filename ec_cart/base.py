@@ -3,6 +3,7 @@ import threading
 from typing import Tuple, Dict, Any
 
 import requests
+from ec_cart import constants
 
 
 class ActiveResource(object):
@@ -13,6 +14,21 @@ class ActiveResource(object):
 
     class Meta:
         model = None
+
+    @staticmethod
+    def _build_header(cls, **kwargs):
+        cls._thread_local._system_code = kwargs.pop('system_code', cls._thread_local._system_code)
+        cls.service_code = kwargs.pop('service_code', cls.service_code)
+        cls._thread_local._access_token = kwargs.pop('access_token', cls._thread_local._access_token)
+        cls._thread_local._ec_url = kwargs.pop('ec_url', cls._thread_local._ec_url)
+        cls._thread_local._headers.update({
+            'system-code': cls._thread_local._system_code,
+            'service-code': cls.service_code,
+            'ec-url': cls._thread_local._ec_url,
+            'Authorization': f'Bearer {cls._thread_local._access_token}'
+        })
+        assert cls._thread_local._system_code in constants.ServiceCode().__list__()
+        return kwargs
 
     @classmethod
     def find(cls, id_=None, **kwargs) -> Any:
@@ -28,12 +44,14 @@ class ActiveResource(object):
         if id_:
             kwargs['id'] = str(id_)
 
+        kwargs = cls._build_header(cls, **kwargs)
+
         return cls.__get(cls, **kwargs)
 
     def __path_connect(self, **kwargs) -> Tuple[str, Dict[str, Any]]:
         if 'id' in kwargs:
             _id = kwargs.pop('id')
-            self._api_path = self._api_path.replace('${id}', _id)
+            self._api_path = self._api_path.replace('${id}', str(_id))
         else:
             self._api_path = self._api_path.replace('${id}', '')
         return self.service_endpoint + str(self._api_path), kwargs
@@ -117,7 +135,7 @@ class ReInterfaceResource(ActiveResource):
     @classmethod
     def clear_service(cls):
         cls.system_code = None
-        cls._ec_url = None
+        cls.ec_url = None
         cls.access_token = None
         cls.headers = cls.old_headers
         cls._thread_local._system_code = None
