@@ -2,7 +2,7 @@
 
 The ReCustomer Interface Python Library
 
-Documentation for version: 0.0.1
+Documentation for version: 0.1.0
 
 # Usage
 
@@ -62,3 +62,9 @@ Use the version you want to install. It can be the main branch or any commit.
     ```shell
     orders = service.Order.find()
     ```
+
+### Support Model
+
+* Order
+* Product
+* Variant

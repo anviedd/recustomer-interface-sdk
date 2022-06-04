@@ -1,6 +1,6 @@
 import os
 
-os.environ.setdefault('INTERFACE_ENDPOINT', '')
+os.environ.setdefault('INTERFACE_ENDPOINT', 'http://127.0.0.1:9009')
 os.environ.setdefault('INTERFACE_API_KEY', '')
 os.environ.setdefault('INTERFACE_REQUEST_SERVICE_CODE', 'tracking')
 os.environ.setdefault('INTERFACE_API_VERSION', 'v1')
@@ -12,6 +12,6 @@ service = EcCart.Service(
     access_token=''
 )
 
-orders = service.Order.find()
+variant = service.Variant.find(42599108903155)
 
-print(orders)
+print(variant)

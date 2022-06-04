@@ -26,6 +26,9 @@ class SessionVariables:
 class Service:
     _session = copy.copy(SessionVariables)
     Order = None
+    Product = None
+    Variant = None
+    ProductVariant = None
 
     def __init__(
             self,

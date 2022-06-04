@@ -24,3 +24,11 @@ class ApiKeyNotFoundError(Exception):
 
 class RequestServiceCodeNotFoundError(Exception):
     pass
+
+
+class ProductIdNotFoundError(Exception):
+    pass
+
+
+class VariantIdNotFoundError(Exception):
+    pass

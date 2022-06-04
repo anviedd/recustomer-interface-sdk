@@ -34,7 +34,7 @@ class ActiveResource(object):
         if id_:
             kwargs['id'] = str(id_)
 
-        return self.__get(**kwargs)
+        return self._get(**kwargs)
 
     def __path_connect(self, **kwargs) -> Tuple[str, Dict[str, Any]]:
         if 'id' in kwargs:
@@ -44,7 +44,7 @@ class ActiveResource(object):
             self._api_path = self._api_path.replace('${id}', '')
         return self.service_endpoint + str(self._api_path), kwargs
 
-    def __get(self, **kwargs) -> Any:
+    def _get(self, **kwargs) -> Any:
         try:
             path_connect, kwargs = self.__path_connect(**kwargs)
             response = requests.get(
