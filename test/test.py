@@ -7,17 +7,11 @@ os.environ.setdefault('INTERFACE_API_VERSION', 'v1')
 
 import ec_cart as EcCart
 
-service = EcCart.Service(ec_url='', access_token='')
+service = EcCart.Service(
+    system_code='SHOPIFY', ec_url='',
+    access_token=''
+)
 
-EcCart.ReInterfaceResource.activate_service(service)
-
-orders = EcCart.Order.find(system_code='SHOPIFY', id=4748013043955)
+orders = service.Order.find()
 
 print(orders)
-
-# # EcCart.ReInterfaceResource.clear_service()
-#
-#
-# orders = EcCart.Order.find()
-#
-# print(orders)

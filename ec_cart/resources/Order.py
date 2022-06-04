@@ -1,9 +1,8 @@
-from ec_cart.base import ReInterfaceResource
+from ec_cart.base import ActiveResource
 from ec_cart.models.Order import OrderModel
-from ec_cart.resources.base import BaseResourceObject
 
 
-class Order(ReInterfaceResource, BaseResourceObject):
+class Order(ActiveResource):
     _api_path = "/orders/${id}"
 
     class Meta:

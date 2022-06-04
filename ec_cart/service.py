@@ -1,63 +1,103 @@
+import copy
+import inspect
 import os
-from contextlib import contextmanager
-
-from ec_cart import constants
-from ec_cart.api_version import ApiVersion
-import six
+import sys
 from urllib.parse import urlparse
 
+from ec_cart.api_version import ApiVersion
+from ec_cart import exceptions
 
-class ValidationException(Exception):
-    pass
 
-
-class Service(object):
+class SessionVariables:
     system_code = None
     ec_url = None
+    access_token = None
+    api_versions = os.environ.get('INTERFACE_API_KEY')
     api_key = os.environ.get('INTERFACE_API_KEY')
-    service_code = os.environ.get('INTERFACE_REQUEST_SERVICE_CODE')
-    version = os.environ.get('INTERFACE_API_VERSION')
+    request_service_code = os.environ.get('INTERFACE_REQUEST_SERVICE_CODE')
     protocol = "https"
     endpoint_domain = os.environ.get('INTERFACE_ENDPOINT')
+    service_endpoint = ''
+    headers = {
+        "User-Agent": "PostmanRuntime/7.29.0"
+    }
 
-    def __init__(self, system_code=None, ec_url=None, access_token=None, version='v1'):
-        """ Init Session Service
-        :param system_code: Third-party system identifiers. Ex: SHOPIFY
-        :param ec_url: User site can be a shop, a carrier,...
-        :param access_token: Token used for user authentication.
-        :param version: Interface API version. Ex: v1. Default: v1
-        """
-        assert self.api_key != '' 'api_key is not empty'
-        assert self.endpoint_domain != '' 'INTERFACE_ENDPOINT is not empty'
+
+class Service:
+    _session = copy.copy(SessionVariables)
+    Order = None
+
+    def __init__(
+            self,
+            system_code=None,
+            ec_url=None,
+            access_token=None,
+            api_versions=os.environ.get('INTERFACE_API_VERSION'),
+            api_key=os.environ.get('INTERFACE_API_KEY'),
+            request_service_code=os.environ.get('INTERFACE_REQUEST_SERVICE_CODE'),
+    ):
+
+        if not system_code:
+            raise exceptions.SystemCodeNotFoundError
+
+        if not ec_url:
+            raise exceptions.EcUrlNotFoundError
+
+        if not access_token:
+            raise exceptions.AccessTokenNotFoundError
+
+        if not api_versions:
+            raise exceptions.VersionNotFoundError
+
+        if not api_key:
+            raise exceptions.ApiKeyNotFoundError
+
+        if not request_service_code:
+            raise exceptions.RequestServiceCodeNotFoundError
+
+        self._session.system_code = system_code
+        self._session.ec_url = ec_url
+        self._session.access_token = access_token
+        self._session.api_versions = ApiVersion(api_versions)
+        self._session.api_key = api_key
+        self._session.request_service_code = request_service_code
+
         self.__prepare_url()
-        self.system_code = system_code
-        self.ec_url = ec_url
-        self.access_token = access_token
-        self.version = ApiVersion.coerce_to_version(version)
-        return
 
-    @staticmethod
-    @contextmanager
-    def temp(system_code, ec_url, access_token):
-        import ec_cart
-        original_system_code = ec_cart.ReInterfaceResource.system_code
-        original_ec_url = ec_cart.ReInterfaceResource.ec_url
-        original_access_token = ec_cart.ReInterfaceResource.access_token
-        original_service = None
-        if original_system_code is not None:
-            original_service = ec_cart.Service(original_system_code, original_ec_url, original_access_token)
+        self.set_header()
 
-        service = Service(system_code, ec_url, access_token)
-        ec_cart.ReInterfaceResource.activate_service(service)
-        yield
-        if original_system_code is not None and original_service:
-            ec_cart.ReInterfaceResource.activate_service(original_service)
+        self._create_resource()
 
     @property
     def endpoint(self):
-        return f"{self.protocol}://{self.endpoint_domain}"
+        return f"{self._session.protocol}://{self._session.endpoint_domain}"
 
     def __prepare_url(self):
-        url_o = urlparse(self.endpoint_domain)
-        self.protocol = url_o.scheme
-        self.endpoint_domain = url_o.netloc
+        url_o = urlparse(self._session.endpoint_domain)
+        self._session.protocol = url_o.scheme
+        self._session.endpoint_domain = url_o.netloc
+        self._session.service_endpoint = self.endpoint
+
+    def _create_resource(self):
+        for name, obj in inspect.getmembers(sys.modules['ec_cart.resources']):
+            if inspect.isclass(obj):
+                new_object = obj(
+                    headers=self.get_headers(),
+                    service_endpoint=self.get_service_endpoint()
+                )
+                setattr(self, obj.__name__, new_object)
+
+    def set_header(self):
+        self._session.headers.update({
+            'x-api-key': self._session.api_key,
+            'ec-url': self._session.ec_url,
+            'system-code': self._session.system_code,
+            'service-code': self._session.request_service_code,
+            'Authorization': f'Bearer {self._session.access_token}'
+        })
+
+    def get_headers(self):
+        return self._session.headers
+
+    def get_service_endpoint(self):
+        return self._session.service_endpoint + self._session.api_versions.path_to_version

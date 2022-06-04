@@ -1,37 +1,27 @@
 import json
-import threading
 from typing import Tuple, Dict, Any
 
 import requests
-from ec_cart import constants
+import six
 
 
 class ActiveResource(object):
     timeout = 60
     _api_path = ''
     service_endpoint = ''
-    _thread_local = None
+    headers = {
+        "User-Agent": "PostmanRuntime/7.29.0"
+    }
+
+    def __init__(self, **kwargs):
+        for k, v in six.iteritems(kwargs):
+            setattr(self, k, v)
+        assert self.Meta.model is not None
 
     class Meta:
         model = None
 
-    @staticmethod
-    def _build_header(cls, **kwargs):
-        cls._thread_local._system_code = kwargs.pop('system_code', cls._thread_local._system_code)
-        cls.service_code = kwargs.pop('service_code', cls.service_code)
-        cls._thread_local._access_token = kwargs.pop('access_token', cls._thread_local._access_token)
-        cls._thread_local._ec_url = kwargs.pop('ec_url', cls._thread_local._ec_url)
-        cls._thread_local._headers.update({
-            'system-code': cls._thread_local._system_code,
-            'service-code': cls.service_code,
-            'ec-url': cls._thread_local._ec_url,
-            'Authorization': f'Bearer {cls._thread_local._access_token}'
-        })
-        assert cls._thread_local._system_code in constants.ServiceCode().__list__()
-        return kwargs
-
-    @classmethod
-    def find(cls, id_=None, **kwargs) -> Any:
+    def find(self, id_=None, **kwargs) -> Any:
         """Core method for finding resources.
 
         Args:
@@ -44,9 +34,7 @@ class ActiveResource(object):
         if id_:
             kwargs['id'] = str(id_)
 
-        kwargs = cls._build_header(cls, **kwargs)
-
-        return cls.__get(cls, **kwargs)
+        return self.__get(**kwargs)
 
     def __path_connect(self, **kwargs) -> Tuple[str, Dict[str, Any]]:
         if 'id' in kwargs:
@@ -56,19 +44,18 @@ class ActiveResource(object):
             self._api_path = self._api_path.replace('${id}', '')
         return self.service_endpoint + str(self._api_path), kwargs
 
-    @staticmethod
-    def __get(cls, **kwargs) -> Any:
+    def __get(self, **kwargs) -> Any:
         try:
-            path_connect, kwargs = cls.__path_connect(cls, **kwargs)
+            path_connect, kwargs = self.__path_connect(**kwargs)
             response = requests.get(
                 url=path_connect,
-                headers=cls._thread_local._headers,
-                timeout=cls.timeout,
+                headers=self.headers,
+                timeout=self.timeout,
                 params=kwargs
             )
             response_content = json.loads(response.content)
             if response.ok:
-                return cls.__build_response(cls, response_content)
+                return self.__build_response(self, response_content)
             else:
                 return response_content
         except Exception as e:
@@ -87,57 +74,3 @@ class ActiveResource(object):
             return content
         except Exception:
             return content
-
-
-class ReInterfaceResource(ActiveResource):
-    api_key = None
-    service_code = None
-    system_code = None
-    ec_url = None
-    access_token = None
-    _thread_local = threading.local()
-
-    old_headers = {
-        "User-Agent": "PostmanRuntime/7.29.0"
-    }
-    headers = {}
-
-    _url = None
-
-    @classmethod
-    def activate_service(cls, service):
-        """ active session service function
-        :param service:
-        """
-        cls.api_key = service.api_key
-        cls.service_code = service.service_code
-        cls.service_endpoint = service.endpoint + service.version.path
-        cls.system_code = service.system_code
-        cls.ec_url = service.ec_url
-        cls.access_token = service.access_token
-        cls._thread_local._system_code = service.system_code
-        cls._thread_local._ec_url = service.ec_url
-        cls._thread_local._access_token = service.access_token
-        cls.headers = cls.old_headers
-        cls._thread_local._headers = cls.headers
-        cls._thread_local._headers.update({
-            'x-api-key': cls.api_key,
-            'system-code': cls._thread_local._system_code,
-            'service-code': cls.service_code,
-        })
-
-        if cls._thread_local._access_token:
-            cls._thread_local._headers.update({
-                'Authorization': f'Bearer {cls._thread_local._access_token}',
-            })
-
-    @classmethod
-    def clear_service(cls):
-        cls.system_code = None
-        cls.ec_url = None
-        cls.access_token = None
-        cls.headers = cls.old_headers
-        cls._thread_local._system_code = None
-        cls._thread_local._ec_url = None
-        cls._thread_local._headers = {}
-        cls._thread_local._access_token = None

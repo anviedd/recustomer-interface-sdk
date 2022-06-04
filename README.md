@@ -51,41 +51,14 @@ Use the version you want to install. It can be the main branch or any commit.
 
 1. Need to initialize the service to use.
 
-    * In case you only have 1 session
-
-        ```shell
-        import ec_cart as EcCart
-
-        service = EcCart.Service(system_code='SHOPIFY', ec_url='', access_token='')
-        ```
-    * In case you have more than one session
-
-        ```shell
-        import ec_cart as EcCart
-
-        service = EcCart.Service()
-        ```
+    ```shell
+    import ec_cart as EcCart
+    
+    service = EcCart.Service(system_code='SHOPIFY', ec_url='', access_token='')
+    ```
 
 2. Now you're ready to make authorized API requests to your shop!
 
-    * Active Service
-        ```shell
-        EcCart.ReInterfaceResource.activate_service(service)
-        ```
-
-    * In case you only have 1 session
-        ```shell
-        orders = EcCart.Order.find()
-        ```
-
-    * In case you have more than one session
-        ```shell
-        shopify_orders = EcCart.Order.find(system_code='SHOPIFY', ec_url='', access_token='')
-        ec_cube_orders = EcCart.Order.find(system_code='EC_CUBE', ec_url='', access_token='')
-        ```
-   
-4. It is best practice to clear your service when you're done. A temporary service does this automatically
-
     ```shell
-    EcCart.ReInterfaceResource.clear_service()
+    orders = service.Order.find()
     ```
