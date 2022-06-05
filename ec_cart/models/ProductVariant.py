@@ -31,6 +31,7 @@ class ProductVariantModel(BaseModel):
     fulfillment_service: Optional[str] = None
     grams: Optional[int] = None
     image_id: Optional[int] = None
+    image_src: Optional[str] = None
     inventory_item_id: Optional[int] = None
     inventory_management: Optional[str] = None
     inventory_policy: Optional[str] = None

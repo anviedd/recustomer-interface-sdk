@@ -23,4 +23,4 @@ class ProductModel(BaseModel):
     vendor: Optional[str] = None
     images: Optional[List[Optional[ProductImageModel]]] = []
     variants: Optional[List[Optional[ProductVariantModel]]] = []
-    options: Optional[VariantOptionModel] = []
+    options: Optional[List[Optional[VariantOptionModel]]] = []
