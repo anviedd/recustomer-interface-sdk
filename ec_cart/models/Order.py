@@ -11,6 +11,7 @@ class OrderModel(BaseModel):
     cancel_reason: Optional[str] = None
     cancelled_at: Optional[str] = None
     closed_at: Optional[str] = None
+    created_at: Optional[str] = None
     confirmed: bool
     financial_status: Optional[str] = None
     fulfillment_status: Optional[str] = None
