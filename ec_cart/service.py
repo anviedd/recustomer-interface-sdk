@@ -8,23 +8,22 @@ from ec_cart.api_version import ApiVersion
 from ec_cart import exceptions
 
 
-class SessionVariables:
-    system_code = None
-    ec_url = None
-    access_token = None
-    api_versions = os.environ.get('INTERFACE_API_KEY')
-    api_key = os.environ.get('INTERFACE_API_KEY')
-    request_service_code = os.environ.get('INTERFACE_REQUEST_SERVICE_CODE')
-    protocol = "https"
-    endpoint_domain = os.environ.get('INTERFACE_ENDPOINT')
-    service_endpoint = ''
-    headers = {
-        "User-Agent": "PostmanRuntime/7.29.0"
-    }
-
-
 class Service:
-    _session = copy.copy(SessionVariables)
+    class SessionVariables:
+        system_code = None
+        ec_url = None
+        access_token = None
+        api_versions = os.environ.get('INTERFACE_API_KEY')
+        api_key = os.environ.get('INTERFACE_API_KEY')
+        request_service_code = os.environ.get('INTERFACE_REQUEST_SERVICE_CODE')
+        protocol = "https"
+        endpoint_domain = os.environ.get('INTERFACE_ENDPOINT')
+        service_endpoint = ''
+        headers = {
+            "User-Agent": "PostmanRuntime/7.29.0"
+        }
+
+    _session = SessionVariables
     Order = None
     Product = None
     Variant = None
@@ -76,10 +75,8 @@ class Service:
         return f"{self._session.protocol}://{self._session.endpoint_domain}"
 
     def __prepare_url(self):
-        url_o = urlparse(self._session.endpoint_domain)
-        self._session.protocol = url_o.scheme
-        self._session.endpoint_domain = url_o.netloc
-        self._session.service_endpoint = self.endpoint
+        self._session.endpoint_domain = os.environ.get('INTERFACE_ENDPOINT')
+        self._session.service_endpoint = os.environ.get('INTERFACE_ENDPOINT')
 
     def _create_resource(self):
         for name, obj in inspect.getmembers(sys.modules['ec_cart.resources']):
