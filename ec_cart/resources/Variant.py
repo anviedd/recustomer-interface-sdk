@@ -11,8 +11,12 @@ class Variant(ActiveResource):
     class Meta:
         model = ProductVariantModel
 
-    def find(self, id_=None, **kwargs) -> Any:
-        if not id_:
+    def find(self, id=None, variant_ids=None, **kwargs) -> Any:
+        if not id and not variant_ids:
             raise exceptions.VariantIdNotFoundError
-        kwargs['id'] = id_
+        elif id:
+            kwargs['id'] = id
+        elif variant_ids:
+            kwargs['variant_ids'] = variant_ids
+
         return super(Variant, self).find(id_=None, **kwargs)
