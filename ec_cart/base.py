@@ -47,7 +47,6 @@ class ActiveResource(object):
     def _get(self, **kwargs) -> Any:
         try:
             path_connect, kwargs = self.__path_connect(**kwargs)
-            print(path_connect)
             response = requests.get(
                 url=path_connect,
                 headers=self.headers,
