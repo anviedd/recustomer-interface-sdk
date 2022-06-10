@@ -14,6 +14,7 @@ class FulFillMent(BaseModel):
     tracking_numbers: Optional[List[str]] = []
     tracking_url: Optional[str] = None
     tracking_urls: Optional[List[str]] = []
+    line_items: Optional[List[Optional[LineItemModel]]] = []
 
 
 class OrderModel(BaseModel):

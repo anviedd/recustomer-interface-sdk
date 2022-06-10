@@ -76,6 +76,10 @@ Use the version you want to install. It can be the main branch or any commit.
         ```shell
         script_tag = service.ScriptTag.find(id="1234")
         ```
+   * Filter Image By VariantID
+        ```shell
+        variant = service.Image.find(variant_id="1234")
+        ```
 
 ### Support Model
 
@@ -83,3 +87,4 @@ Use the version you want to install. It can be the main branch or any commit.
 * Product
 * Variant
 * ScriptTag
+* Image
