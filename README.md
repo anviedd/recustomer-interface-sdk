@@ -62,9 +62,24 @@ Use the version you want to install. It can be the main branch or any commit.
     ```shell
     orders = service.Order.find()
     ```
+   * Create Script Tag
+        ```shell
+        script_tag = service.ScriptTag.create(event="", src="")
+        - event: Valid values: "onload"
+        - src: The URL of the remote script.
+        ```
+   * Delete Script tag
+        ```shell
+        script_tag = service.ScriptTag.delete(id="1234")
+        ```
+   * Detail Script Tag
+        ```shell
+        script_tag = service.ScriptTag.find(id="1234")
+        ```
 
 ### Support Model
 
 * Order
 * Product
 * Variant
+* ScriptTag

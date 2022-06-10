@@ -4,6 +4,8 @@ from typing import Tuple, Dict, Any
 import requests
 import six
 
+from ec_cart import exceptions
+
 
 class ActiveResource(object):
     timeout = 60
@@ -36,6 +38,17 @@ class ActiveResource(object):
 
         return self._get(**kwargs)
 
+    def delete(self, id_=None, **kwargs):
+        if not id_:
+            if 'id' not in kwargs:
+                raise exceptions.ParamIdNotFoundError
+            elif not kwargs['id']:
+                raise exceptions.ParamIdNotFoundError
+        else:
+            kwargs['id'] = str(id_)
+
+        return self._delete(**kwargs)
+
     def __path_connect(self, **kwargs) -> Tuple[str, Dict[str, Any]]:
         if 'id' in kwargs:
             _id = kwargs.pop('id')
@@ -61,8 +74,46 @@ class ActiveResource(object):
         except Exception as e:
             raise e
 
+    def _post(self, **kwargs):
+        try:
+            path_connect, kwargs = self.__path_connect(**kwargs)
+            self.headers.update({"Content-Type": "application/json"})
+            response = requests.post(
+                url=path_connect,
+                headers=self.headers,
+                timeout=self.timeout,
+                data=json.dumps(kwargs)
+            )
+            response_content = json.loads(response.content)
+            if response.ok:
+                return self.__build_response(self, response_content)
+            else:
+                return response_content
+        except Exception as e:
+            raise e
+
+    def _delete(self, **kwargs):
+        try:
+            path_connect, kwargs = self.__path_connect(**kwargs)
+            response = requests.delete(
+                url=path_connect,
+                headers=self.headers,
+                timeout=self.timeout
+            )
+            response_content = json.loads(response.content)
+            if response.ok:
+                return self.__build_response(self, response_content)
+            else:
+                return response_content
+        except Exception as e:
+            raise e
+
     @staticmethod
     def __build_response(cls, content) -> Any:
+        if content is None:
+            return {
+                'data': content
+            }
         data = content.get('data')
         if cls.Meta.model is None:
             return data

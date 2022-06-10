@@ -32,3 +32,7 @@ class ProductIdNotFoundError(Exception):
 
 class VariantIdNotFoundError(Exception):
     pass
+
+
+class ParamIdNotFoundError(Exception):
+    pass
