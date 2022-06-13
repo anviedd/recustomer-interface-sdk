@@ -54,7 +54,11 @@ class ActiveResource(object):
             _id = kwargs.pop('id')
             self._api_path = self._api_path.replace('${id}', str(_id))
         else:
-            self._api_path = self._api_path.replace('${id}', '')
+            _id = ''
+        if '${id}' in self._api_path:
+            self._api_path = self._api_path.replace('${id}', str(_id))
+        else:
+            self._api_path = self._api_path + str(_id)
         return self.service_endpoint + str(self._api_path), kwargs
 
     def _get(self, **kwargs) -> Any:
