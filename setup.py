@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ec-cart",
-    version="0.4.0",
+    version="0.4.1",
     author="Sang Nguyen",
     author_email="sang.nguyen@recustomer.co",
     description="ReCustomer Interface package",
