@@ -50,16 +50,16 @@ class ActiveResource(object):
         return self._delete(**kwargs)
 
     def __path_connect(self, **kwargs) -> Tuple[str, Dict[str, Any]]:
+        _api_path = self._api_path
         if 'id' in kwargs:
             _id = kwargs.pop('id')
-            self._api_path = self._api_path.replace('${id}', str(_id))
         else:
             _id = ''
-        if '${id}' in self._api_path:
-            self._api_path = self._api_path.replace('${id}', str(_id))
+        if '${id}' in _api_path:
+            _api_path = _api_path.replace('${id}', str(_id))
         else:
-            self._api_path = self._api_path + str(_id)
-        return self.service_endpoint + str(self._api_path), kwargs
+            _api_path = _api_path + str(_id)
+        return self.service_endpoint + str(_api_path), kwargs
 
     def _get(self, **kwargs) -> Any:
         try:
