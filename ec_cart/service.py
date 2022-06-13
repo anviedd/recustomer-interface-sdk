@@ -28,6 +28,8 @@ class Service:
     Product = None
     Variant = None
     ProductVariant = None
+    ScriptTag = None
+    Image = None
 
     def __init__(
             self,
