@@ -17,3 +17,6 @@ class Image(ActiveResource):
         else:
             kwargs['id'] = variant_id
         return super(Image, self).find(id_=None, **kwargs)
+
+    def delete(self, id_=None, **kwargs):
+        raise exceptions.MethodNotAllowedError

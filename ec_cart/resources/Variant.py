@@ -20,3 +20,6 @@ class Variant(ActiveResource):
             kwargs['variant_ids'] = variant_ids
 
         return super(Variant, self).find(id_=None, **kwargs)
+
+    def delete(self, id_=None, **kwargs):
+        raise exceptions.MethodNotAllowedError

@@ -36,3 +36,11 @@ class VariantIdNotFoundError(Exception):
 
 class ParamIdNotFoundError(Exception):
     pass
+
+
+class ScriptTagIdNotFoundError(Exception):
+    pass
+
+
+class MethodNotAllowedError(Exception):
+    pass

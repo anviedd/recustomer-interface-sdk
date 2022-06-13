@@ -16,3 +16,6 @@ class ProductVariant(ActiveResource):
             raise exceptions.ProductIdNotFoundError
         kwargs['id'] = id_
         return super(ProductVariant, self).find(id_=None, **kwargs)
+
+    def delete(self, id_=None, **kwargs):
+        raise exceptions.MethodNotAllowedError
