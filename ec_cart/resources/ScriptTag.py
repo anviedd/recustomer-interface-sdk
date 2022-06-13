@@ -16,6 +16,12 @@ class ScriptTag(ActiveResource):
         return self._post(**kwargs)
 
     def delete(self, id_=None, **kwargs):
-        if not id_ or 'id' not in kwargs or not kwargs['id']:
+        if not id_ and 'id' not in kwargs:
             raise exceptions.ScriptTagIdNotFoundError
+        elif 'id' in kwargs and not kwargs['id']:
+            raise exceptions.ScriptTagIdNotFoundError
+
+        if id_:
+            kwargs['id'] = str(id_)
+
         return super(ScriptTag, self).delete(id_=None, **kwargs)
