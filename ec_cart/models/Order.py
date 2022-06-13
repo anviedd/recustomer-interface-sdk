@@ -6,6 +6,24 @@ from ec_cart.models.Customer import CustomerModel
 from ec_cart.models.LineItem import LineItemModel
 
 
+class ShippingAddress(BaseModel):
+    address1: Optional[str] = None
+    address2: Optional[str] = None
+    city: Optional[str] = None
+    company: Optional[str] = None
+    country: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    latitude: Optional[str] = None
+    longitude: Optional[str] = None
+    phone: Optional[str] = None
+    province: Optional[str] = None
+    zip: Optional[str] = None
+    name: Optional[str] = None
+    country_code: Optional[str] = None
+    province_code: Optional[str] = None
+
+
 class FulFillMent(BaseModel):
     id: int
     status: Optional[str] = None
@@ -31,6 +49,7 @@ class OrderModel(BaseModel):
     number: int = None
     order_number: int = None
     phone: Optional[str] = None
+    shipping_address: Optional[ShippingAddress] = None
     billing_address: Optional[BillingAddressModel] = None
     customer: Optional[CustomerModel] = None
     line_items: Optional[List[Optional[LineItemModel]]] = []
