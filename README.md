@@ -80,6 +80,26 @@ Use the version you want to install. It can be the main branch or any commit.
         ```shell
         variant = service.Image.find(variant_id="1234")
         ```
+   * Create Webhook
+        ```shell
+        webhook = service.Webhook.create(address="", format="", "topic")
+        - address: The URL of the Webhook.
+        - topic: topic.
+        - format: format.
+        ```
+   * Delete Webhook
+        ```shell
+        webhook = service.Webhook.delete(id="1234")
+        ```
+   
+   * List Webhook
+        ```shell
+        webhook = service.Webhook.find()
+        ```
+   * Detail Webhook
+        ```shell
+        webhook = service.Webhook.find(id="123")
+        ```
 
 ### Support Model
 
@@ -88,3 +108,4 @@ Use the version you want to install. It can be the main branch or any commit.
 * Variant
 * ScriptTag
 * Image
+* Webhook

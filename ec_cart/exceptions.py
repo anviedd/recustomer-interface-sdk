@@ -44,3 +44,7 @@ class ScriptTagIdNotFoundError(Exception):
 
 class MethodNotAllowedError(Exception):
     pass
+
+
+class WebhookIdNotFoundError(Exception):
+    pass

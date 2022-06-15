@@ -30,6 +30,7 @@ class Service:
     ProductVariant = None
     ScriptTag = None
     Image = None
+    Webhook = None
 
     def __init__(
             self,
