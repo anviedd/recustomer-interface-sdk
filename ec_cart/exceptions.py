@@ -48,3 +48,11 @@ class MethodNotAllowedError(Exception):
 
 class WebhookIdNotFoundError(Exception):
     pass
+
+
+class OrderIdNotFoundError(Exception):
+    pass
+
+
+class TransactionIdNotFoundError(Exception):
+    pass

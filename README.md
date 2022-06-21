@@ -100,6 +100,14 @@ Use the version you want to install. It can be the main branch or any commit.
         ```shell
         webhook = service.Webhook.find(id="123")
         ```
+   * List Order Transaction
+        ```shell
+        order_transactions = service.OrderTransaction.find(order_id="123")
+        ```
+   * Detail Order Transaction
+        ```shell
+        order_transaction = service.OrderTransaction.find(order_id="123", transaction_id="123")
+        ```
 
 ### Support Model
 
@@ -109,3 +117,4 @@ Use the version you want to install. It can be the main branch or any commit.
 * ScriptTag
 * Image
 * Webhook
+* OrderTransaction

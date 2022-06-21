@@ -31,6 +31,7 @@ class Service:
     ScriptTag = None
     Image = None
     Webhook = None
+    OrderTransaction = None
 
     def __init__(
             self,

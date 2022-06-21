@@ -10,6 +10,7 @@ from ec_cart import exceptions
 class ActiveResource(object):
     timeout = 60
     _api_path = ''
+    _detail_api_path = ''
     service_endpoint = ''
     headers = {
         "User-Agent": "PostmanRuntime/7.29.0"
@@ -51,6 +52,8 @@ class ActiveResource(object):
 
     def __path_connect(self, **kwargs) -> Tuple[str, Dict[str, Any]]:
         _api_path = self._api_path
+        _detail_api_path = self._detail_api_path
+        _detail_api_path_exited = False
         if 'id' in kwargs:
             _id = kwargs.pop('id')
         else:
@@ -59,7 +62,24 @@ class ActiveResource(object):
             _api_path = _api_path.replace('${id}', str(_id))
         else:
             _api_path = _api_path + str(_id)
-        return self.service_endpoint + str(_api_path), kwargs
+
+        removed_key = []
+        for key, value in kwargs.items():
+            new_key = '${' + f'{key}' + '}'
+            if new_key in _api_path:
+                _api_path = _api_path.replace(new_key, str(value))
+                removed_key.append(key)
+            elif _detail_api_path and new_key in _detail_api_path:
+                _detail_api_path = _detail_api_path.replace(new_key, str(value))
+                _detail_api_path_exited = True
+                removed_key.append(key)
+
+        for k in removed_key:
+            kwargs.pop(k)
+
+        _detail_api_path = _detail_api_path if _detail_api_path_exited else ""
+
+        return self.service_endpoint + str(_api_path) + _detail_api_path, kwargs
 
     def _get(self, **kwargs) -> Any:
         try:
