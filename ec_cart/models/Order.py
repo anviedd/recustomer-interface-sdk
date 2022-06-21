@@ -27,6 +27,7 @@ class ShippingAddress(BaseModel):
 class FulFillMent(BaseModel):
     id: int
     status: Optional[str] = None
+    created_at: Optional[str] = None
     tracking_company: Optional[str] = None
     tracking_number: Optional[str] = None
     tracking_numbers: Optional[List[str]] = []
