@@ -32,6 +32,7 @@ class Service:
     Image = None
     Webhook = None
     OrderTransaction = None
+    OrderCancel = None
 
     def __init__(
             self,
