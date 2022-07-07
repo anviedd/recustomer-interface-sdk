@@ -33,6 +33,7 @@ class Service:
     Webhook = None
     OrderTransaction = None
     OrderCancel = None
+    OrderRefund = None
 
     def __init__(
             self,
