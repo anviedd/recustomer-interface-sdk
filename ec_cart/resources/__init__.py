@@ -6,3 +6,4 @@ from .ScriptTag import ScriptTag
 from .Image import Image
 from .Webhook import Webhook
 from .OrderTransaction import OrderTransaction
+from .OrderCancel import OrderCancel
