@@ -2,14 +2,14 @@ from typing import Any
 
 from ec_cart import exceptions
 from ec_cart.base import ActiveResource
-from ec_cart.models.OrderTransaction import OrderTransactionModel
+from ec_cart.models.OrderCancel import OrderCancelModel
 
 
 class OrderCancel(ActiveResource):
     _api_path = "/orders/${order_id}/cancel/"
 
     class Meta:
-        model = OrderTransactionModel
+        model = OrderCancelModel
 
     def create(self, id_=None, **kwargs):
         if id_:
