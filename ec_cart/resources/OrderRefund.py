@@ -5,7 +5,7 @@ from ec_cart.base import ActiveResource
 from ec_cart.models.OrderRefund import OrderRefundModel
 
 
-class OrderCancel(ActiveResource):
+class OrderRefund(ActiveResource):
     _api_path = "/orders/${order_id}/refunds/"
 
     class Meta:
