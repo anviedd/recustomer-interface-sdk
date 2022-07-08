@@ -34,6 +34,7 @@ class Service:
     OrderTransaction = None
     OrderCancel = None
     OrderRefund = None
+    Inventory = None
 
     def __init__(
             self,
