@@ -13,3 +13,4 @@ from .Shop import Shop
 from .IneligibleData import IneligibleData
 from .OrderEditBegin import OrderEditBegin
 from .OrderEditLineQuantity import OrderEditLineQuantity
+from .OrderEditCommit import OrderEditCommit

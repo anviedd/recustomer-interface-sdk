@@ -39,6 +39,7 @@ class Service:
     IneligibleData = None
     OrderEditBegin = None
     OrderEditLineQuantity = None
+    OrderEditCommit = None
 
     def __init__(
             self,
