@@ -30,5 +30,5 @@ class userErrors(BaseModel):
 
 
 class OrderEditBeginModel(BaseModel):
-    userErrors: Optional[userErrors] = None
-    calculatedOrder: Optional[CalculatedOrder] = None
+    order_calculated_id: str = None
+    line_calculated_id: str = None
