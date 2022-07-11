@@ -5,7 +5,7 @@ from ec_cart.base import ActiveResource
 from ec_cart.models.OrderEditBegin import OrderEditBeginModel
 
 
-class OrderCancel(ActiveResource):
+class OrderEditBegin(ActiveResource):
     _api_path = "/orders/edit/begin/"
 
     class Meta:
