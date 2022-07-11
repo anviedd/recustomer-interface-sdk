@@ -40,11 +40,11 @@ class PriceRules(BaseModel):
     edges: List[Union[PriceRulesEdges, None]] = None
 
 
-class IneligibleData(BaseModel):
+class IneligibleDataModel(BaseModel):
     priceRules: PriceRules = None
     orders: Orders = None
     collections: Collections = None
 
 
-class IneligibleDataModel(BaseModel):
-    data: IneligibleData = None
+# class IneligibleDataModel(BaseModel):
+#     data: IneligibleData = None
