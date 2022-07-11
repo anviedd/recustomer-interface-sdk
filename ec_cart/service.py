@@ -37,6 +37,7 @@ class Service:
     Inventory = None
     Shop = None
     IneligibleData = None
+    OrderEfitBegin = None
 
     def __init__(
             self,
