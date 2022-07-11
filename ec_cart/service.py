@@ -38,6 +38,7 @@ class Service:
     Shop = None
     IneligibleData = None
     OrderEditBegin = None
+    OrderEditLineQuantity = None
 
     def __init__(
             self,
