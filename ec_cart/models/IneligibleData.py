@@ -46,5 +46,5 @@ class IneligibleData(BaseModel):
     collections: Collections = None
 
 
-class IneligibleDataResponse(BaseModel):
+class IneligibleDataModel(BaseModel):
     data: IneligibleData = None
