@@ -4,16 +4,16 @@ from pydantic import BaseModel
 
 
 class CollectionsNode(BaseModel):
-    id: int = None
+    id: str = None
     title: str = None
 
 
 class CollectionsEdges(BaseModel):
-    node: str = None
+    node: CollectionsNode = None
 
 
 class Collections(BaseModel):
-    edges: str = None
+    edges: List[Union[CollectionsEdges, None]] = None
 
 
 class OrdersNode(BaseModel):
@@ -25,7 +25,7 @@ class OrdersEdges(BaseModel):
 
 
 class Orders(BaseModel):
-    orders: List[Dict[str, Union[int, str, float]]]
+    edges: List[Union[OrdersEdges, None]] = None
 
 
 class PriceRulesNode(BaseModel):
@@ -46,5 +46,5 @@ class IneligibleData(BaseModel):
     collections: Collections = None
 
 
-class IneligibleDataModel(BaseModel):
+class IneligibleDataResponse(BaseModel):
     data: IneligibleData = None
