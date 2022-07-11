@@ -41,9 +41,9 @@ class PriceRules(BaseModel):
 
 
 class IneligibleData(BaseModel):
-    priceRules: Optional[PriceRules] = None
-    orders: Optional[Orders] = None
-    collections: Optional[Collections] = None
+    priceRules: PriceRules = None
+    orders: Orders = None
+    collections: Collections = None
 
 
 class IneligibleDataModel(BaseModel):
