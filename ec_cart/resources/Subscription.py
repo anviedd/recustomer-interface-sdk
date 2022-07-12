@@ -24,3 +24,6 @@ class Subscription(ActiveResource):
 
     def delete(self, id_=None, **kwargs):
         raise exceptions.MethodNotAllowedError
+
+    def find(self, **kwargs):
+        raise exceptions.MethodNotAllowedError
