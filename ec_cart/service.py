@@ -40,6 +40,7 @@ class Service:
     OrderEditBegin = None
     OrderEditLineQuantity = None
     OrderEditCommit = None
+    Subscription = None
 
     def __init__(
             self,
