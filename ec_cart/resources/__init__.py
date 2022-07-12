@@ -15,3 +15,4 @@ from .OrderEditBegin import OrderEditBegin
 from .OrderEditLineQuantity import OrderEditLineQuantity
 from .OrderEditCommit import OrderEditCommit
 from .Subscription import Subscription
+from .UsageRecord import UsageRecord
