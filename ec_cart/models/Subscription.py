@@ -10,5 +10,5 @@ class SubscriptionCreateModel(BaseModel):
 
 
 class SubscriptionCancelModel(BaseModel):
-    result: bool = False
+    is_error: bool = False
     status_code: int = None
