@@ -118,3 +118,13 @@ Use the version you want to install. It can be the main branch or any commit.
 * Image
 * Webhook
 * OrderTransaction
+* IneligibleData
+* Inventory
+* OrderCancel
+* OrderEditBegin
+* OrderEditCommit
+* OrderEditLineQuantity
+* OrderRefund
+* Shop
+* Subscription
+* UsageRecord
