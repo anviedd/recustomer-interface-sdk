@@ -116,6 +116,24 @@ class ActiveResource(object):
         except Exception as e:
             raise e
 
+    def _put(self, **kwargs):
+        try:
+            path_connect, kwargs = self.__path_connect(**kwargs)
+            self.headers.update({"Content-Type": "application/json"})
+            response = requests.put(
+                url=path_connect,
+                headers=self.headers,
+                timeout=self.timeout,
+                data=json.dumps(kwargs)
+            )
+            response_content = json.loads(response.content)
+            if response.ok:
+                return self.__build_response(self, response_content)
+            else:
+                return response_content
+        except Exception as e:
+            raise e
+
     def _delete(self, **kwargs):
         try:
             path_connect, kwargs = self.__path_connect(**kwargs)

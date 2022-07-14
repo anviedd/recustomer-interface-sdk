@@ -32,6 +32,16 @@ class Service:
     Image = None
     Webhook = None
     OrderTransaction = None
+    OrderCancel = None
+    OrderRefund = None
+    Inventory = None
+    Shop = None
+    IneligibleData = None
+    OrderEditBegin = None
+    OrderEditLineQuantity = None
+    OrderEditCommit = None
+    Subscription = None
+    UsageRecord = None
 
     def __init__(
             self,
