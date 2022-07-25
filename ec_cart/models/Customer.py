@@ -14,5 +14,5 @@ class CustomerModel(BaseModel):
     verified_email: bool
     phone: Optional[str] = None
     tags: Optional[str] = None
-    addresses: Optional[str] = None
+    addresses: Optional[DefaultAddressModel] = None
     default_address: Optional[DefaultAddressModel] = None

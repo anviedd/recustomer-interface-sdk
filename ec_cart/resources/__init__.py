@@ -16,3 +16,4 @@ from .OrderEditLineQuantity import OrderEditLineQuantity
 from .OrderEditCommit import OrderEditCommit
 from .Subscription import Subscription
 from .UsageRecord import UsageRecord
+from .Customer import Customer

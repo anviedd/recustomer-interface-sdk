@@ -42,6 +42,7 @@ class Service:
     OrderEditCommit = None
     Subscription = None
     UsageRecord = None
+    Customer = None
 
     def __init__(
             self,
