@@ -49,9 +49,10 @@ class Service:
             system_code=None,
             ec_url=None,
             access_token=None,
-            api_versions=os.environ.get('INTERFACE_API_VERSION'),
-            api_key=os.environ.get('INTERFACE_API_KEY'),
+            interface_api_versions=os.environ.get('INTERFACE_API_VERSION'),
+            interface_api_key=os.environ.get('INTERFACE_API_KEY'),
             request_service_code=os.environ.get('INTERFACE_REQUEST_SERVICE_CODE'),
+            api_version=None
     ):
 
         if not system_code:
@@ -63,10 +64,10 @@ class Service:
         if not access_token:
             raise exceptions.AccessTokenNotFoundError
 
-        if not api_versions:
+        if not interface_api_versions:
             raise exceptions.VersionNotFoundError
 
-        if not api_key:
+        if not interface_api_key:
             raise exceptions.ApiKeyNotFoundError
 
         if not request_service_code:
@@ -75,9 +76,10 @@ class Service:
         self._session.system_code = system_code
         self._session.ec_url = ec_url
         self._session.access_token = access_token
-        self._session.api_versions = ApiVersion(api_versions)
-        self._session.api_key = api_key
+        self._session.interface_api_versions = ApiVersion(interface_api_versions)
+        self._session.interface_api_key = interface_api_key
         self._session.request_service_code = request_service_code
+        self._session.api_version = api_version
 
         self.__prepare_url()
 
@@ -104,15 +106,16 @@ class Service:
 
     def set_header(self):
         self._session.headers.update({
-            'x-api-key': self._session.api_key,
+            'x-api-key': self._session.interface_api_key,
             'ec-url': self._session.ec_url,
             'system-code': self._session.system_code,
             'service-code': self._session.request_service_code,
-            'Authorization': f'Bearer {self._session.access_token}'
+            'Authorization': f'Bearer {self._session.access_token}',
+            'api-version': self._session.api_version
         })
 
     def get_headers(self):
         return self._session.headers
 
     def get_service_endpoint(self):
-        return self._session.service_endpoint + self._session.api_versions.path_to_version
+        return self._session.service_endpoint + self._session.interface_api_versions.path_to_version
