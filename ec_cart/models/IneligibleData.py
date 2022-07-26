@@ -15,6 +15,17 @@ class CollectionsEdges(BaseModel):
 class Collections(BaseModel):
     edges: List[Union[CollectionsEdges, None]] = None
 
+class ProductNode(BaseModel):
+    tags: List[str] = None
+
+
+class ProductsEdges(BaseModel):
+    node: ProductNode = None
+
+
+class Products(BaseModel):
+    edges: List[Union[ProductsEdges, None]] = None
+
 
 class OrdersNode(BaseModel):
     tags: List[str] = None
@@ -41,10 +52,7 @@ class PriceRules(BaseModel):
 
 
 class IneligibleDataModel(BaseModel):
-    priceRules: PriceRules = None
-    orders: Orders = None
+    price_rules: PriceRules = None
+    order_tags: Orders = None
     collections: Collections = None
-
-
-# class IneligibleDataModel(BaseModel):
-#     data: IneligibleData = None
+    product_tags: Optional[Products] = None
