@@ -56,3 +56,7 @@ class OrderIdNotFoundError(Exception):
 
 class TransactionIdNotFoundError(Exception):
     pass
+
+
+class ProductIdAndImageIdNotFoundError(Exception):
+    pass

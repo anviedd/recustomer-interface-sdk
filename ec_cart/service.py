@@ -43,6 +43,7 @@ class Service:
     Subscription = None
     UsageRecord = None
     Customer = None
+    ProductImage = None
 
     def __init__(
             self,
