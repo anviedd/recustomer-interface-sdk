@@ -35,6 +35,26 @@ class FulFillMent(BaseModel):
     tracking_urls: Optional[List[str]] = []
     line_items: Optional[List[Optional[LineItemModel]]] = []
 
+class Customer(BaseModel):
+    id: int = None
+    email: str = None
+    first_name: str = None
+    last_name: str = None
+    phone: str = None
+
+
+class ShippingLinesObject(BaseModel):
+    code: str = None
+    price: str = None
+    discounted_price: str = None
+    id: int = None
+
+
+class DiscountCodes(BaseModel):
+    code: str = None
+    amount: float = None
+    type: str = None
+
 
 class OrderModel(BaseModel):
     id: int = None
@@ -55,3 +75,16 @@ class OrderModel(BaseModel):
     customer: Optional[CustomerModel] = None
     line_items: Optional[List[Optional[LineItemModel]]] = []
     fulfillments: Optional[List[Optional[FulFillMent]]] = []
+    customer: Optional[Customer] = None
+    email: Optional[str] = None
+    gateway: Optional[str] = None
+    location_id: Optional[int] = None
+    payment_gateway_names: Optional[List[str]] = None
+    shipping_lines: Optional[List[ShippingLinesObject]] = None
+    tags: Optional[str] = None
+    taxes_include: Optional[bool] = None
+    total_discounts: Optional[float] = None
+    total_line_items_price: Optional[float] = None
+    total_price: Optional[float] = None
+    updated_at: Optional[str] = None
+    discount_codes: Optional[List[DiscountCodes]] = None
