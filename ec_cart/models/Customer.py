@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
@@ -16,3 +16,4 @@ class CustomerModel(BaseModel):
     tags: Optional[str] = None
     addresses: Optional[DefaultAddressModel] = None
     default_address: Optional[DefaultAddressModel] = None
+    addresses: Optional[List[DefaultAddressModel]] = None
