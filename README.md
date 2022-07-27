@@ -114,6 +114,7 @@ Use the version you want to install. It can be the main branch or any commit.
 * Order
 * Product
 * Variant
+* ProductVariant
 * ScriptTag
 * Image
 * Webhook
