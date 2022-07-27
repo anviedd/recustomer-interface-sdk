@@ -6,7 +6,7 @@ from ec_cart.models.Inventory import InventoryModel
 
 
 class Inventory(ActiveResource):
-    _api_path = "/inventory/"
+    _api_path = "/inventories/"
 
     class Meta:
         model = InventoryModel
