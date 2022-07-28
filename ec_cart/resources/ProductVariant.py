@@ -6,7 +6,7 @@ from ec_cart.models.ProductVariant import ProductVariantModel
 
 
 class ProductVariant(ActiveResource):
-    _api_path = "/products/${id}/variants"
+    _api_path = "/products/${product_id}/variants"
 
     class Meta:
         model = ProductVariantModel
