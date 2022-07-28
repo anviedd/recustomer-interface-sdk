@@ -11,15 +11,15 @@ class Variant(ActiveResource):
     class Meta:
         model = ProductVariantModel
 
-    def find(self, id=None, variant_ids=None, **kwargs) -> Any:
-        if not id and not variant_ids:
-            raise exceptions.VariantIdNotFoundError
-        elif id:
-            kwargs['id'] = id
-        elif variant_ids:
-            kwargs['variant_ids'] = variant_ids
+    # def find(self, id=None, variant_ids=None, **kwargs) -> Any:
+    #     if not id and not variant_ids:
+    #         raise exceptions.VariantIdNotFoundError
+    #     elif id:
+    #         kwargs['id'] = id
+    #     elif variant_ids:
+    #         kwargs['variant_ids'] = variant_ids
 
-        return super(Variant, self).find(id_=None, **kwargs)
+    #     return super(Variant, self).find(id_=None, **kwargs)
 
     def delete(self, id_=None, **kwargs):
         raise exceptions.MethodNotAllowedError
