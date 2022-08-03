@@ -55,4 +55,4 @@ class OrderModel(BaseModel):
     customer: Optional[CustomerModel] = None
     line_items: Optional[List[Optional[LineItemModel]]] = []
     fulfillments: Optional[List[Optional[FulFillMent]]] = []
-    tags: Optional[str] = None
+    tags: str = None
