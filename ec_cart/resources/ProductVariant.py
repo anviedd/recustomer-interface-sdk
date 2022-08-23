@@ -12,6 +12,9 @@ class ProductVariant(ActiveResource):
         model = ProductVariantModel
 
     def find(self, id_=None, **kwargs) -> Any:
+        print("##########################################")
+        print(kwargs)
+        print("##########################################")
         if not id_:
             raise exceptions.ProductIdNotFoundError
         kwargs['product_id'] = id_
