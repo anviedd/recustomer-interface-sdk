@@ -41,3 +41,12 @@ class LineItemModel(BaseModel):
     quantity_total: Optional[int] = None
     quantity: Optional[int] = None
     province_code: Optional[str] = None
+    return_deadline: Optional[bool] = None
+    discounted_product: Optional[bool] = None
+    discounted_code: Optional[bool] = None
+    excluded_sku: Optional[bool] = None
+    excluded_collection: Optional[bool] = None
+    excluded_type: Optional[bool] = None
+    excluded_order_tag: Optional[bool] = None
+    excluded_tag: Optional[bool] = None
+    excluded_customize: Optional[bool] = None
