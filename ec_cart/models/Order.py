@@ -84,7 +84,7 @@ class OrderModel(BaseModel):
     payment_gateway_names: Optional[List[str]] = None
     shipping_lines: Optional[List[ShippingLinesObject]] = None
     tags: Optional[str] = None
-    taxes_include: Optional[bool] = None
+    taxes_included: Optional[bool] = None
     total_discounts: Optional[float] = None
     total_line_items_price: Optional[float] = None
     total_price: Optional[float] = None
