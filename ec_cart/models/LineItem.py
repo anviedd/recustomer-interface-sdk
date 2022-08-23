@@ -2,6 +2,15 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+class ShopMoney(BaseModel):
+    amount: Optional[str] = None
+    currency_code: Optional[str] = None
+
+
+class PriceSet(BaseModel):
+    shop_money: Optional[ShopMoney] = None
+
+
 class LineItemModel(BaseModel):
     id: int = None
     admin_graphql_api_id: Optional[str] = None
@@ -20,6 +29,8 @@ class LineItemModel(BaseModel):
     fulfillment_status: Optional[str] = None
     product_name: Optional[str] = None
     fulfillable_quantity: Optional[int] = None
+    vendor: Optional[str] = None
+    price_set: Optional[PriceSet] = None
 
     # return & cancelの処理内でパラメータをセットする
     cancel_deadline: Optional[bool] = None
