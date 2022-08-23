@@ -18,3 +18,4 @@ class LineItemModel(BaseModel):
     variant_id: Optional[str] = None
     variant_title: Optional[str] = None
     fulfillment_status: Optional[str] = None
+    product_name: Optional[str] = None
