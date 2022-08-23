@@ -19,6 +19,7 @@ class LineItemModel(BaseModel):
     variant_title: Optional[str] = None
     fulfillment_status: Optional[str] = None
     product_name: Optional[str] = None
+    fulfillable_quantity: Optional[int] = None
 
     # return & cancelの処理内でパラメータをセットする
     cancel_deadline: Optional[bool] = None
