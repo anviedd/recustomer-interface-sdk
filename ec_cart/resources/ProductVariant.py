@@ -15,9 +15,9 @@ class ProductVariant(ActiveResource):
         print("##########################################")
         print(kwargs)
         print("##########################################")
-        if not id_:
+        if not id_ and kwargs.get("product_id") is None:
             raise exceptions.ProductIdNotFoundError
-        kwargs['product_id'] = id_
+        kwargs['product_id'] = id_ if id_ else kwargs.get("product_id")
         return super(ProductVariant, self).find(id_=None, **kwargs)
 
     def delete(self, id_=None, **kwargs):
