@@ -15,7 +15,7 @@ class LineItemModel(BaseModel):
     sku: Optional[str] = None
     title: Optional[str] = None
     total_discount: Optional[str] = None
-    variant_id: Optional[str] = None
+    variant_id: Optional[int] = None
     variant_title: Optional[str] = None
     fulfillment_status: Optional[str] = None
     product_name: Optional[str] = None
