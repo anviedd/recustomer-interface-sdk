@@ -1,5 +1,4 @@
 from typing import Optional
-from xmlrpc.client import Boolean
 from pydantic import BaseModel
 
 
@@ -21,5 +20,23 @@ class LineItemModel(BaseModel):
     fulfillment_status: Optional[str] = None
     product_name: Optional[str] = None
 
-    # return & cancelで値をセットするようのパラメータ
+    # return & cancelの処理内でパラメータをセットする
     cancel_deadline: Optional[bool] = None
+    discounted_product: Optional[bool] = None
+    sku_product: Optional[bool] = None
+    discounted_code: Optional[bool] = None
+    excluded_collection: Optional[bool] = None
+    excluded_type: Optional[bool] = None
+    excluded_order_tag: Optional[bool] = None
+    excluded_tag: Optional[bool] = None
+    excluded_customize: Optional[bool] = None
+    partial_cancel_off: Optional[bool] = None
+    partial_no_order: Optional[bool] = None
+    options: Optional[dict] = None
+    images: Optional[str] = None
+    order_id: Optional[int] = None
+    order_name: Optional[str] = None
+    line_item_id: Optional[int] = None
+    quantity_total: Optional[int] = None
+    quantity: Optional[int] = None
+    province_code: Optional[str] = None
