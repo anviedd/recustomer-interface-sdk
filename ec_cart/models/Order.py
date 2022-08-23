@@ -58,6 +58,13 @@ class DiscountCodes(BaseModel):
     type: str = None
 
 
+class TaxLines(BaseModel):
+    price: Optional[float] = None
+    rate: Optional[float] = None
+    title: Optional[str] = None
+    channel_liable: Optional[bool] = None
+
+
 class OrderModel(BaseModel):
     id: int = None
     cancel_reason: Optional[str] = None
@@ -90,3 +97,4 @@ class OrderModel(BaseModel):
     total_price: Optional[float] = None
     updated_at: Optional[str] = None
     discount_codes: Optional[List[DiscountCodes]] = None
+    tax_lines: Optional[List[TaxLines]] = None
