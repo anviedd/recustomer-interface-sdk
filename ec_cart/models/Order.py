@@ -34,6 +34,8 @@ class FulFillMent(BaseModel):
     tracking_url: Optional[str] = None
     tracking_urls: Optional[List[str]] = []
     line_items: Optional[List[Optional[LineItemModel]]] = []
+    created_at: Optional[str] = None
+    updated_at: Optional[str] = None
 
 class Customer(BaseModel):
     id: int = None
